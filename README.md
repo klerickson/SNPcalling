@@ -1,5 +1,5 @@
 # SNP calling
-This is a tutorial for how to call Single Nucleotide Polymorphisms (SNPs) from UCE data after running Phyluce Tutorial 1 and assumes you have followed the naming conventions and file structure laid out in that tutorial.
+This is a tutorial for how to call Single Nucleotide Polymorphisms (SNPs) from UCE data after running [Phyluce Tutorial 1]([https://phyluce.readthedocs.io/en/latest/tutorial-one.html]). It outlines modifications that can be made to the scripts developed and used in Zaraz et. al. 2016 to extract SNPs from UCE reads.
 
 It relies on the specific program versions that are installed on Harvey Mudd College's Purves server. 
 
