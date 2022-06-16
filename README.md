@@ -47,12 +47,13 @@ Last updated June 16, 2022.
       --output ref-ONLY-UCE.fasta 
 
 ## 3. Run the SNP calling script 
-#### 4a. Copy the script into your files and run it using nohup
+
     cd snp_calling
-    cp /data/mcfadden/kerickson/Programs/snpcalling.sh ./
+    cp /data/mcfadden/kerickson/Programs/snpcalling.sh /.
     nohup bash snpcalling.sh > snpcalling.log
 
 ## 4. Filter SNPs using vcftools
+
 The following parameters are useful for our the SNP data sets we create:
 <ul>
 <li> <code>--min-alleles 2</code> and <code>--max-alleles 2</code> ensures that we only included biallelic sites </li>
