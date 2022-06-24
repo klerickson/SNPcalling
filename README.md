@@ -5,44 +5,41 @@ It relies on the specific program versions that are installed on Harvey Mudd Col
 
 Last updated June 16, 2022.  
 
-## 1. Setup programs and directory structure 
+## 1. Setup directory structure 
 
-#### 1a. Set a path to vcftools
-    cd ~
-    nano .zshrc
-    #scroll to the bottom of the file and add the lines:
-    export PATH=”/path/to/vcftools/bin”
-    
-#### 1b. Create directory structure
+#### 1a. Create directory structure
+
     mkdir snp_calling
     cd snp_calling
     mkdir reads
     
-#### 1c. For each sample you wish to call SNPs from, copy the cleaned reads from the phyluce tutorial one into your reads folder. 
+#### 1b. For each sample you wish to call SNPs from, copy the cleaned reads from the phyluce tutorial one into your reads folder. 
 
-	  cp -r /path/to/clean-fastq/sample-name /.../snp_calling/reads
+	  cp -r /path/to/clean-fastq/sample-name /.../snp_calling/reads #change this line to match path to your reads, replace ... with sample name
   
 ## 2. Set a reference individual 
 
 #### 2a. Choose reference individual by finding the sample with the most unique UCE contigs, which can be found by looking at the log files created when running phyluce.
-    less /path/to/phyluce_assembly_match_contigs_to_probes.log 
+
+    less /path/to/phyluce_assembly_match_contigs_to_probes.log #change path to match path to log file
 
 #### 2b. Make a reference file named ``ref.conf`` which includes the following two lines
     
+    cd snpcalling
     [ref] 
     #type your reference sample name here
     
 #### 2c. Create a fasta of all the UCE loci found in your reference using phyluce programs
 
     phyluce_assembly_get_match_counts \
-      --locus-db /path/to/uce-search-results/probe.matches.sqlite \
+      	--locus-db /path/to/uce-search-results/probe.matches.sqlite \ #change this line to match path to your contigs
     	--taxon-list-config ref.conf \
     	--taxon-group ref \
     	--output ref-ONLY.conf
       
     phyluce_assembly_get_fastas_from_match_counts \
-       --contigs /path/to/spades-assemblies/contigs \
-      ---locus-db /path/to/uce-search-results/probe.matches.sqlite \
+      --contigs /path/to/spades-assemblies/contigs \ #change this line to match path to your contigs
+      --locus-db /path/to/uce-search-results/probe.matches.sqlite \ #change this line to match path to your probe matches
       --match-count-output ref-ONLY.conf \
       --output ref-ONLY-UCE.fasta 
 
@@ -66,6 +63,8 @@ The following parameters are useful for our the SNP data sets we create:
 Here is how the above filters can be run: 
 
     vcftools --vcf genotyped_X_samples_only_PASS_snp_5th.vcf --min-alleles 2 --max-alleles 2 --thin 1000 --max-missing 0.95 --max-non-ref-af 0.99 --recode --out filtered_vcf95
+    
+``vcftools`` can be found at ``/data/mcfadden/aquattrini/PROGRAMS/vcftools/bin/vcftools``
 
 More parameters can be added to filter SNPs, subset the individuals, produce more output files and more. Documentation for available parameters can be found on the [VCTools Webpage]([https://duckduckgo.com](http://vcftools.sourceforge.net/man_latest.html))
 
