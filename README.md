@@ -73,4 +73,37 @@ More parameters can be added to filter SNPs, subset the individuals, produce mor
     phyluce_snp_convert_vcf_to_structure --input filtered_vcf95.recode.vcf --output input_structure.str
 
 ## 6. Next Steps
-Your final ``.str`` file can be used to run STRUCTURE on purves and can be read into R and analyzed using a variety of programs such as DAPC and Unsupervised Random Foresting programs. 
+Your final ``.str`` file can be used to run STRUCTURE on purves and can be read into R and analyzed using a variety of programs (such as DAPC and Unsupervised Random Foresting analyses). 
+
+# Running STRUCTURE
+## 1. Make sure .str file does not have a header line of loci labels. If it does, you can remove it using:
+	nano filtered_snps.str
+	command+K to remove first line of text 
+	
+## 2. Make folder to run structure in, and copy the following files into folder:
+	/data/mcfadden/kerickson/STRUCTURE/input.py 
+	/data/mcfadden/kerickson/STRUCTURE/strauto_1.py 
+	/data/mcfadden/kerickson/STRUCTURE/structure 
+	/data/mcfadden/kerickson/STRUCTURE/parallel
+	/path/to/filtered_snps.str
+## 3. Edit input.py
+In #1, change ``maxpops = `` to be the largest K value you would like to run
+In #4, change ``dataset = `` to be the name of your .str file
+In #6, change ``numind =`` to be the number of individuals in your analyses 
+In #7, change ``numloci =`` to be the number of loci
+(the number of individuals and loci in your file can be found in the .log file created when you used .vcf to filter your snps) 
+
+## 4. Create binary file to run structure with your input by running the following:
+	python2.7 strauto_1.py
+It will prompt you to review and accept the parameters you set in input.py
+
+## 5. Edit extraparams
+	nano extraparams
+	Change “LOCISPOP = 1” to “LOCISPOP = 0”
+
+## 6. Run the program
+	nohup ./runstructure
+	
+## 7. Visualize results
+Results for each K will be populated in the folder ``results_f``. These files can be read into R and made into plots using commands in the R library ``pophelper``
+
